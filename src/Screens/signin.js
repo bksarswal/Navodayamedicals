@@ -11,8 +11,8 @@ const Signin = () => {
   });
 
   // Hardcoded admin credentials
-  // const adminEmail = 'bksarswal@gmail.com';
-  // const adminPassword = '@12345678';
+  const adminEmail = 'bksarswal@gmail.com';
+  const adminPassword = '@12345678';
 
   // Handle changes in the form inputs
   const handleChange = (e) => {
