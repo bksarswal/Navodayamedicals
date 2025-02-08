@@ -11,8 +11,8 @@ const Signin = () => {
   });
 
   // Hardcoded admin credentials
-  const adminEmail = 'bksarswal@gmail.com';
-  const adminPassword = '@12345678';
+  // const adminEmail = 'bksarswal@gmail.com';
+  // const adminPassword = '@12345678';
 
   // Handle changes in the form inputs
   const handleChange = (e) => {
@@ -35,7 +35,7 @@ const Signin = () => {
       signInWithEmailAndPassword(auth, formData.email, formData.password)
         .then((res) => {
           alert('User Signed In');
-          navigate('/user-dashboard'); // Navigate to User Dashboard
+          navigate('/dashboard'); // Navigate to User Dashboard
         })
         .catch((err) => {
           alert('Login failed: ' + err.message); // Show error if login fails
