@@ -13,7 +13,7 @@ const Dashboardrouter = () => {
     <div>  
   <DashboardNavbar/>
        <Routes>
-        <Route path='/dashbord' element={<DashboardHome/>} />
+        <Route path='/dashboard' element={<DashboardHome/>} />
         <Route path='/appointment' element={<Appointment/>} />
         <Route path='/myappointment' element={<MyAppointments/>} />
       

@@ -1,88 +1,86 @@
 import { useState, useEffect } from "react";
-import { User, BarChart, DollarSign, Users, Briefcase, Activity } from "lucide-react";
-import { auth } from "../Config/firebaseConfig";
+import { Calendar, User } from "lucide-react";
+import { auth, db } from "../Config/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 
 export default function DashboardHome() {
   const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      if (currentUser) {
+        await fetchUserData(currentUser.uid);
+        await fetchAppointments(currentUser.uid);
+      }
     });
 
     return () => unsubscribe();
   }, []);
 
+  // ✅ Fetch user data from Firestore
+  const fetchUserData = async (userId) => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", userId));
+      if (userDoc.exists()) {
+        setUserData(userDoc.data());
+      } else {
+        console.error("User data not found!");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  // ✅ Fetch user's appointments from Firestore
+  const fetchAppointments = async (userId) => {
+    try {
+      const querySnapshot = await getDocs(collection(db, `users/${userId}/appointments`));
+      const appointmentsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setAppointments(appointmentsList);
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+    }
+  };
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      {/* Header */}
-      {/* <div className="bg-white p-6 rounded-lg shadow-md flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
-        <div className="flex items-center gap-3">
-          <User size={28} className="text-blue-600" />
-          <span className="text-gray-700 font-medium">
-            {user ? user.displayName || "Admin" : "Guest"}
-          </span>
-        </div>
-      </div> */}
-
-      {/* Stats Cards */}
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-600">Total Users</h3>
-            <p className="text-3xl font-bold text-blue-600">1,245</p>
-          </div>
-          <Users size={32} className="text-blue-500" />
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-600">Revenue</h3>
-            <p className="text-3xl font-bold text-green-600">$32,000</p>
-          </div>
-          <DollarSign size={32} className="text-green-500" />
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-600">Active Sessions</h3>
-            <p className="text-3xl font-bold text-yellow-600">350</p>
-          </div>
-          <Activity size={32} className="text-yellow-500" />
+      
+      {/* Logged-in User Info */}
+      <div className="bg-white p-6 rounded-lg shadow-md flex items-center gap-4">
+        <User size={48} className="text-blue-500" />
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800">
+            {userData ? userData.name : "Loading..."}
+          </h2>
+          <p className="text-gray-600">{userData ? userData.email : "No email found"}</p>
         </div>
       </div>
 
-      {/* Analytics Section */}
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-            <BarChart size={24} className="text-blue-500" /> Analytics Overview
-          </h3>
-          <p className="mt-2 text-gray-600">Your monthly performance has increased by <span className="text-green-600 font-bold">18%</span></p>
-          <div className="mt-4 h-32 bg-gray-200 rounded"></div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-            <Briefcase size={24} className="text-purple-500" /> Recent Transactions
-          </h3>
-          <ul className="mt-4 space-y-3">
-            <li className="flex justify-between">
-              <span className="text-gray-700">Payment Received</span>
-              <span className="text-green-600 font-bold">+ $1,200</span>
-            </li>
-            <li className="flex justify-between">
-              <span className="text-gray-700">Subscription Renewed</span>
-              <span className="text-red-600 font-bold">- $299</span>
-            </li>
-            <li className="flex justify-between">
-              <span className="text-gray-700">New Order</span>
-              <span className="text-green-600 font-bold">+ $850</span>
-            </li>
+      {/* My Appointments Section */}
+      <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+          <Calendar size={24} className="text-blue-500" /> My Appointments
+        </h3>
+        {appointments.length === 0 ? (
+          <p className="text-gray-600 mt-2">No appointments found.</p>
+        ) : (
+          <ul className="mt-4 space-y-4">
+            {appointments.map((appointment) => (
+              <li key={appointment.id} className="border p-4 rounded-lg flex justify-between bg-gray-50">
+                <div>
+                  <h4 className="font-semibold text-gray-700">{appointment.name}</h4>
+                  <p className="text-gray-600 text-sm">{appointment.date} at {appointment.time}</p>
+                  <p className="text-gray-500 text-sm">{appointment.message}</p>
+                </div>
+                <span className="text-green-600 font-bold">✓ Confirmed</span>
+              </li>
+            ))}
           </ul>
-        </div>
+        )}
       </div>
     </div>
   );

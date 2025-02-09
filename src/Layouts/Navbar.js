@@ -22,14 +22,14 @@ export default function Navbar() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-      navigate("/signin"); // ✅ Redirect to signin page
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  };
+  // const handleSignOut = async () => {
+  //   try {
+  //     await signOut(auth);
+  //     navigate("/signin"); // ✅ Redirect to signin page
+  //   } catch (error) {
+  //     console.error("Error signing out:", error);
+  //   }
+  // };
 
   return (
     <div className="relative">
@@ -40,7 +40,7 @@ export default function Navbar() {
           <button onClick={toggleSidebar} className="md:hidden">
             {isSidebarOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
-          <h1 className="text-xl font-bold">Saini Medical Store</h1>
+          <h1 className="text-xl font-bold">Navodaya Medicals </h1>
         </div>
 
         {/* Desktop Navigation */}

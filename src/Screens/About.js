@@ -4,9 +4,9 @@ function About() {
   return (
     <div className="bg-gray-100 py-8">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-4">About Saini Medical Store</h2>
+        <h2 className="text-3xl font-bold mb-4">About Navodaya Medicals </h2>
         <p className="mb-4">
-          Saini Medical Store has been serving the community for over 1 years. We pride ourselves on providing
+          Navodaya Medicals  has been serving the community for over 1 years. We pride ourselves on providing
           high-quality medicines and excellent customer service.
         </p>
         <p className="mb-4">
@@ -19,7 +19,7 @@ function About() {
           {/* <li>Fast and reliable home delivery service</li>
           <li>24/7 emergency service</li> */}
         </ul>
-        <p>Visit us today and experience the Saini Medical Store difference!</p>
+        <p>Visit us today and experience the Navodaya Medicals  difference!</p>
       </div>
     </div>
   )

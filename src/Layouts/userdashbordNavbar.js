@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, LogOut, User, Home } from "lucide-react"; // Icons
+import { Menu, X, LogOut,  } from "lucide-react"; // Icons
 import { auth } from "../Config/firebaseConfig"; // Firebase auth
 import { onAuthStateChanged, signOut } from "firebase/auth"; // Firebase signout
 
 export default function DashboardNavbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [ setUser] = useState(null);
   const navigate = useNavigate();
 
   // Firebase authentication state change listener
@@ -42,12 +42,12 @@ export default function DashboardNavbar() {
           <button onClick={toggleSidebar} className="md:hidden">
             {isSidebarOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
-          <h1 className="text-xl font-bold">Saini Medical Store</h1>
+          <h1 className="text-xl font-bold">Navodaya Medicals </h1>
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-6">
-          <Link to="/dashbord" className="hover:text-gray-300 flex items-center gap-2">
+          <Link to="/dashboard" className="hover:text-gray-300 flex items-center gap-2">
              Home
           </Link>
           <Link to="/myappointment" className="hover:text-gray-300 flex items-center gap-2">
@@ -85,7 +85,7 @@ export default function DashboardNavbar() {
         <ul className="space-y-4 p-4">
           <li>
             <Link
-              to="/dashbord"
+              to="/dashboard"
               className="block p-2 hover:bg-gray-200 rounded"
               onClick={toggleSidebar}
             >

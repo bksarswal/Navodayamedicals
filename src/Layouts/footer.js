@@ -11,7 +11,7 @@ export default function Footer() {
           <div>
             <h5 className="text-lg font-semibold mb-2">About Us</h5>
             <p className="text-sm">
-              Saini Medical Store has been serving the community for over 1 year. 
+              Navodaya Medicals  has been serving the community for over 1 year. 
               We pride ourselves on providing high-quality medicines and excellent customer service.
             </p>
             <a href="/about" className="hover:underline text-sm mt-2 inline-block text-gray-700">

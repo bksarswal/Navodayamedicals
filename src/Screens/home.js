@@ -10,7 +10,7 @@ function Home() {
   const slides = [
     {
       image: home1,
-      title: "Welcome to Saini Medical Store",
+      title: "Welcome to Navodaya Medicals ",
       description: "Your trusted partner in health and wellness",
     },
     {
