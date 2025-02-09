@@ -47,7 +47,7 @@ export default function Navbar() {
         <div className="hidden md:flex space-x-6">
           <Link to="/" className="hover:text-gray-200">Home</Link>
           <Link to="/about" className="hover:text-gray-200">About</Link>
-          <Link to="/services" className="hover:text-gray-200">Services</Link>
+          <Link to="/contact" className="hover:text-gray-200">Contact</Link>
           
           <Link to="/signin" className="hover:text-gray-200">Sign In</Link>
         </div>
@@ -71,12 +71,13 @@ export default function Navbar() {
           <button onClick={toggleSidebar}>
             <X size={24} />
           </button>
-        </div>
+        </div> 
         <ul className="space-y-4 p-4">
           <li><Link to="/" className="block p-2 hover:bg-blue-500 rounded" onClick={toggleSidebar}>Home</Link></li>
           <li><Link to="/about" className="block p-2 hover:bg-blue-500 rounded" onClick={toggleSidebar}>About</Link></li>
           {/* <li><Link to="/services" className="block p-2 hover:bg-blue-500 rounded" onClick={toggleSidebar}>Services</Link></li> */}
           
+          <li><Link to="/contact" className="block p-2 hover:bg-blue-500 rounded" onClick={toggleSidebar}>Contact</Link></li>
           <li><Link to="/signin" className="block p-2 hover:bg-blue-500 rounded" onClick={toggleSidebar}>Signin</Link></li>
         </ul>
       </div>
